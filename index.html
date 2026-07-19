@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>maitrib</title>
+<meta name="description" content="maitrī — tools built with care. Coming quietly.">
+<meta name="theme-color" content="#FAF9F6">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%231A1A18"/><text x="50" y="66" font-size="46" text-anchor="middle" fill="%23FAF9F6" font-family="Georgia">म</text></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FAF9F6;--ink:#1A1A18;--soft:#8B8778;--accent:#B0692F}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{padding:3rem 1.5rem;animation:fade 1.1s ease both}
+  .devanagari{font-family:Georgia,serif;font-size:1.35rem;color:var(--accent);letter-spacing:.08em}
+  h1{font-size:clamp(2.2rem,7vw,3.2rem);font-weight:500;letter-spacing:-.02em;margin-top:.7rem}
+  .line{margin-top:1.1rem;font-size:1rem;color:var(--soft)}
+  footer{margin-top:3rem;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:var(--soft)}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){main{animation:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="devanagari">मैत्री</div>
+  <h1>maitrib</h1>
+  <p class="line">Tools built with care. Coming quietly.</p>
+  <footer>maitrī &middot; loving-kindness</footer>
+</main>
+</body>
+</html>
