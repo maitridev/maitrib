@@ -21,8 +21,9 @@ overflow:hidden;margin-bottom:22px;box-shadow:var(--sh)}
 font-weight:800;font-size:17px;color:#fff;flex:none}
 .hd h2{font-size:17px;font-weight:650;margin:0}.hd .s{font-size:13px;color:var(--dim);margin:1px 0 0}
 video{width:100%;display:block;background:#000}
-.dl{display:block;text-align:center;padding:15px;font-size:15px;font-weight:600;
-color:#fff;text-decoration:none}
+.dl{display:block;text-align:center;padding:16px;font-size:16px;font-weight:650;color:#fff;text-decoration:none}
+.dl2{display:block;text-align:center;padding:12px;font-size:13.5px;color:var(--dim);
+text-decoration:none;border-top:1px solid var(--line)}
 .ask{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;
 text-align:center;box-shadow:var(--sh)}
 .ask h3{margin:0 0 7px;font-size:18px}.ask p{margin:0;color:var(--dim);font-size:14px}
@@ -36,19 +37,36 @@ Two cuts of the same afternoon. Watch both &mdash; keep whichever you like.</p>
   <div class="hd"><div class="chip" style="background:var(--a)">A</div>
   <div><h2>Version A</h2><p class="s">63 seconds</p></div></div>
   <video src="version-a.mp4" controls playsinline preload="metadata"></video>
-  <a class="dl" style="background:var(--a)" href="version-a.mp4" download="For-Tess-A.mp4">Download A</a>
+  <button class="dl" style="background:var(--a);border:0;width:100%;cursor:pointer;font-family:inherit" onclick="vote('A')">&#9829; Vote for A</button>
+  <a class="dl2" href="version-a.mp4" download="For-Tess-A.mp4">Download A</a>
 </div>
 
 <div class="pane">
   <div class="hd"><div class="chip" style="background:var(--b)">B</div>
   <div><h2>Version B</h2><p class="s">50 seconds</p></div></div>
   <video src="version-b.mp4" controls playsinline preload="metadata"></video>
-  <a class="dl" style="background:var(--b)" href="version-b.mp4" download="For-Tess-B.mp4">Download B</a>
+  <button class="dl" style="background:var(--b);border:0;width:100%;cursor:pointer;font-family:inherit" onclick="vote('B')">&#9829; Vote for B</button>
+  <a class="dl2" href="version-b.mp4" download="For-Tess-B.mp4">Download B</a>
 </div>
 
-<div class="ask"><h3>Which one?</h3>
-<p>Tell Michael <strong>A</strong> or <strong>B</strong> &mdash; whichever one you'd want to keep.</p></div>
+<div class="ask" id="ask"><h3>Which one?</h3>
+<p>Tap a heart above. You can still download either one.</p></div>
+<div class="ask" id="thanks" style="display:none"><h3>Thank you!</h3>
+<p id="tmsg"></p><p id="tally" style="margin-top:10px;font-weight:600;color:var(--ink)"></p></div>
 
 <footer>Teresa &middot; Mary &middot; Justine &middot; Zsofia &middot; Paige &middot; Sara &middot; Michael<br>
 Yours to download and share.</footer>
-</div></body></html>
+</div>
+<script>
+const V="https://brush-generally-orleans-marketplace.trycloudflare.com";
+function vote(p){
+  fetch(V+"/vote?pick="+p,{method:"POST",mode:"cors"})
+    .then(r=>r.json()).then(d=>{
+      document.getElementById("tally").textContent="A "+d.A+"   \u00b7   B "+d.B;
+    }).catch(()=>{});
+  document.getElementById("ask").style.display="none";
+  const t=document.getElementById("thanks"); t.style.display="block";
+  document.getElementById("tmsg").textContent="You voted for "+p+".";
+  t.scrollIntoView({behavior:"smooth",block:"center"});
+}
+</script></body></html>
