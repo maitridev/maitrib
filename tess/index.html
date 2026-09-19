@@ -1,63 +1,16 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
-<title>For Tess</title><meta property="og:title" content="For Tess">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>For Tess</title>
+<meta http-equiv="refresh" content="0; url=https://status.maitrib.ca/tess-vote/">
+<link rel="canonical" href="https://status.maitrib.ca/tess-vote/">
 <style>
-:root{--bg:#faf8f5;--card:#fff;--ink:#1b1a18;--dim:#6f6a63;--line:#e6e1d9;--sh:0 6px 30px rgba(0,0,0,.09)}
-@media(prefers-color-scheme:dark){:root{--bg:#141313;--card:#1e1d1c;--ink:#f2efe9;--dim:#948e86;--line:#302e2b;--sh:0 6px 30px rgba(0,0,0,.5)}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5;
-font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;padding:32px 14px 80px}
-.wrap{max-width:470px;margin:0 auto}
-h1{font-size:32px;font-weight:700;margin:0 0 6px;letter-spacing:-.02em;text-align:center}
-.lede{color:var(--dim);font-size:15px;margin:0 0 30px;text-align:center}
-.pane{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;
-margin-bottom:22px;box-shadow:var(--sh)}
-.hd{padding:16px 18px 13px;display:flex;align-items:center;gap:11px}
-.chip{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:17px;color:#fff;flex:none}
-.hd h2{font-size:17px;font-weight:650;margin:0}.hd .s{font-size:13px;color:var(--dim);margin:1px 0 0}
-video{width:100%;display:block;background:#000}
-.dl{display:block;text-align:center;padding:16px;font-size:16px;font-weight:650;color:#fff;text-decoration:none}
-.dl2{display:block;text-align:center;padding:12px;font-size:13px;color:var(--dim);text-decoration:none;border-top:1px solid var(--line)}
-.ask{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center;box-shadow:var(--sh)}
-.ask h3{margin:0 0 7px;font-size:19px}.ask p{margin:0;color:var(--dim);font-size:14px}
-footer{margin-top:30px;color:var(--dim);font-size:12px;text-align:center;line-height:1.7}
-</style></head><body><div class="wrap">
-<h1>For Tess</h1>
-<p class="lede">Kensington Hospice &middot; Friday 18 September 2026<br>
-Same film, three different soundtracks. Pick your favourite.</p>
-<div class="pane">
-  <div class="hd"><div class="chip" style="background:#c2553a">1</div>
-  <div><h2>Blinding Lights &rarr; Yellow</h2><p class="s">Drives, then goes soft at &ldquo;we love you, Tess.&rdquo;</p></div></div>
-  <video src="v-blinding.mp4" controls playsinline preload="none"></video>
-  <button class="dl" style="background:#c2553a;border:0;width:100%;cursor:pointer;font-family:inherit" onclick="vote('1')">&#9829; Vote for this one</button>
-  <div class="dl2">streaming only &mdash; music is licensed</div>
-</div><div class="pane">
-  <div class="hd"><div class="chip" style="background:#7a5bbd">2</div>
-  <div><h2>What Is Love</h2><p class="s">Maximum silliness.</p></div></div>
-  <video src="v-whatislove.mp4" controls playsinline preload="none"></video>
-  <button class="dl" style="background:#7a5bbd;border:0;width:100%;cursor:pointer;font-family:inherit" onclick="vote('2')">&#9829; Vote for this one</button>
-  <div class="dl2">streaming only &mdash; music is licensed</div>
-</div><div class="pane">
-  <div class="hd"><div class="chip" style="background:#2f6b57">3</div>
-  <div><h2>Our own tune</h2><p class="s">Written just for this. Yours to download.</p></div></div>
-  <video src="v-original.mp4" controls playsinline preload="none"></video>
-  <button class="dl" style="background:#2f6b57;border:0;width:100%;cursor:pointer;font-family:inherit" onclick="vote('3')">&#9829; Vote for this one</button>
-  <a class="dl2" href="v-original.mp4" download="For-Tess.mp4">Download</a>
-</div>
-<div class="ask" id="ask"><h3>Which one?</h3><p>Tap a heart. Michael will send Tess the winner.</p></div>
-<div class="ask" id="thanks" style="display:none"><h3>Thank you!</h3>
-<p id="tmsg"></p><p id="tally" style="margin-top:10px;font-weight:700;color:var(--ink);font-size:16px"></p></div>
-<footer>Teresa &middot; Mary &middot; Justine &middot; Zsofia &middot; Paige &middot; Sara &middot; Michael<br>
-Music on 1 and 2 licensed via Lickd &mdash; lickd.co</footer>
-</div><script>
-const V="https://brush-generally-orleans-marketplace.trycloudflare.com";
-function vote(p){
-  fetch(V+"/vote?pick="+p,{method:"POST",mode:"cors"}).then(r=>r.json()).then(d=>{
-    document.getElementById("tally").textContent="1: "+(d["1"]||0)+"   2: "+(d["2"]||0)+"   3: "+(d["3"]||0);
-  }).catch(()=>{});
-  document.getElementById("ask").style.display="none";
-  const t=document.getElementById("thanks"); t.style.display="block";
-  document.getElementById("tmsg").textContent="You picked number "+p+".";
-  t.scrollIntoView({behavior:"smooth",block:"center"});
-}
-</script></body></html>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#faf8f5;color:#1b1a18;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Helvetica,Arial,sans-serif;text-align:center;padding:24px}
+@media(prefers-color-scheme:dark){body{background:#141313;color:#f2efe9}}
+a{color:#2f6b57;font-weight:600}
+</style></head><body><div>
+<p style="font-size:19px;margin:0 0 10px">Taking you to the vote&hellip;</p>
+<p style="font-size:14px;opacity:.7;margin:0 0 18px">If nothing happens:</p>
+<p><a href="https://status.maitrib.ca/tess-vote/">status.maitrib.ca/tess-vote/</a></p>
+</div><script>location.replace("https://status.maitrib.ca/tess-vote/");</script></body></html>
