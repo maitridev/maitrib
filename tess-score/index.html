@@ -38,20 +38,50 @@ const L={"1":["What Is Love","Cut A · 50s","#c2553a"],"2":["What Is Love","Cut 
 async function go(){
  try{
   const d=await (await fetch("https://status.maitrib.ca/tess-vote/api/tally",{cache:"no-store"})).json();
-  const c=d.counts||{}, nm=d.names||{};
+  const rawC=d.counts||{}, nm=d.names||{};
+  // ---- dedupe: one vote per person, trimmed + case-insensitive
+  const seen=new Map();   // key -> {opt, display}
+  const dupes=[], conflicts=[];
+  for(const k of Object.keys(L)){
+    for(const raw of (nm[k]||[])){
+      const key=String(raw).trim().toLowerCase().replace(/\s+/g," ");
+      if(!key) continue;
+      if(seen.has(key)){
+        const prev=seen.get(key);
+        if(prev.opt!==k){ conflicts.push(raw); seen.set(key,{opt:k,display:raw}); }
+        else dupes.push(raw);
+      } else seen.set(key,{opt:k,display:raw});
+    }
+  }
+  const c={}, who={};
+  for(const k of Object.keys(L)){ c[k]=0; who[k]=[]; }
+  for(const {opt,display} of seen.values()){ c[opt]=(c[opt]||0)+1; who[opt].push(display); }
+  // anonymous votes (no name given) still count
+  for(const k of Object.keys(L)){
+    const named=(nm[k]||[]).length, anon=Math.max(0,(rawC[k]||0)-named);
+    c[k]+=anon;
+  }
   const tot=Object.values(c).reduce((a,b)=>a+b,0), mx=Math.max(1,...Object.values(c));
-  document.getElementById("sub").textContent=tot+(tot===1?" vote":" votes")+" so far";
+  const rawTot=Object.values(rawC).reduce((a,b)=>a+b,0);
+  let note=tot+(tot===1?" vote":" votes");
+  if(rawTot>tot) note+=" &middot; "+(rawTot-tot)+" duplicate"+((rawTot-tot)===1?"":"s")+" removed";
+  document.getElementById("sub").innerHTML=note;
   const ks=Object.keys(L).sort((a,b)=>(c[b]||0)-(c[a]||0));
   document.getElementById("rows").innerHTML=ks.map(k=>{
-   const n=c[k]||0,[mus,cut,col]=L[k],who=(nm[k]||[]).join(", ");
+   const n=c[k]||0,[mus,cut,col]=L[k],w=(who[k]||[]).join(", ");
    return `<div class="row"><div class="top"><div class="n" style="color:${col}">${n}</div>
-   <div class="lbl">${mus}<span style="color:var(--dim);font-weight:400"> · ${cut}</span></div></div>
-   ${who?`<div class="who">${who}</div>`:""}
+   <div class="lbl">${mus}<span style="color:var(--dim);font-weight:400"> &middot; ${cut}</span></div></div>
+   ${w?`<div class="who">${w}</div>`:""}
    <div class="bar"><i style="width:${n/mx*100}%;background:${col}"></i></div></div>`}).join("");
   const A=(c["1"]||0)+(c["3"]||0)+(c["5"]||0), B=(c["2"]||0)+(c["4"]||0)+(c["6"]||0);
   const comm=(c["1"]||0)+(c["2"]||0)+(c["3"]||0)+(c["4"]||0), orig=(c["5"]||0)+(c["6"]||0);
   document.getElementById("bycut").textContent=`A ${A} · B ${B}`;
   document.getElementById("bymusic").textContent=`licensed ${comm} · ours ${orig}`;
+  const f=document.querySelector(".foot");
+  let extra="";
+  if(dupes.length) extra+=`<br><span style="opacity:.75">ignored repeat votes: ${[...new Set(dupes)].join(", ")}</span>`;
+  if(conflicts.length) extra+=`<br><span style="opacity:.75">changed their mind (latest kept): ${[...new Set(conflicts)].join(", ")}</span>`;
+  f.innerHTML=`Refreshes every 15 seconds. One vote per person.${extra}<br><a href="https://status.maitrib.ca/tess-vote/" style="color:var(--a)">open the vote page</a>`;
  }catch(e){document.getElementById("sub").textContent="couldn't reach the counter";}
 }
 go(); setInterval(go,15000);
